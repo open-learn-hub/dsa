@@ -4,7 +4,7 @@ set -e  # Exit immediately on error
 
 echo "Root directory: " $PWD
 
-PROJECT_NAME="Main"
+PROJECT_NAME="DSA"
 
 export PROJECT_NAME
 
