@@ -1,4 +1,4 @@
-#include "quicksort.h"
+#include "QuickSort.h"
 #include <utility>
 #include <iostream>
 #include "utils/ArrayUtils.h"
