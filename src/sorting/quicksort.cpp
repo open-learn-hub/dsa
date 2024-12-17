@@ -2,7 +2,6 @@
 #include <utility>
 #include <iostream>
 #include "utils/ArrayUtils.h"
-#include <math.h>
 
 using namespace olh;
 
@@ -10,53 +9,60 @@ void olh::QuickSort(int* const array, const int length)
 {
     if (length <= 1) return;
 
-    int leftMost = 0;
-    int anchor = leftMost + length - 1;
-    int steps = 0;
-    Partition(array, length, 0, anchor);    
-    
+    Partition(array, 0, length - 1); 
 }
 
-void olh::Partition(int* const array, const int length, int begin, int anchor)
-{   
+void olh::Partition(int* const array, const int begin, const int end)
+{
+    int length = end - begin + 1;
+    int anchor = end;
 
-    std::cout << "Sorting Partition length: " << length << " anchor: " << anchor << " begin " << begin << std::endl; 
-    if (anchor <= 0) return;
-    Print(array, begin, length);
+    if (length <= 0) return;
+
+    // Debug Input
+    // Print(array, begin, length);
 
     int slowIdx = -1;
-    for (int fastIdx = begin; fastIdx < anchor; fastIdx++)
+    int fastIdx = begin;
+    for (; fastIdx < anchor; fastIdx++)
     {
-        std::cout << "SlowIdx: " << slowIdx << " FastIdx: " << fastIdx << " FastIdxValue: " << array[fastIdx] << " AchorValue: " << array[anchor] << "::";
-        Print(array, begin, length);
         if (array[fastIdx] < array[anchor])
         {
-            if (slowIdx < 0)
-            {
-                slowIdx = begin - 1;
-            }
             slowIdx++;
-            std::cout << "Swap array[" << slowIdx << "]: " << array[slowIdx] << " array[" << fastIdx << "]: " << array[fastIdx] << "::";
-            std::swap(array[slowIdx], array[fastIdx]);
-            Print(array, begin, length);    
+            std::swap(array[begin + slowIdx], array[fastIdx]);    
         }
     }
 
-    slowIdx++;
-    std::swap(array[slowIdx], array[anchor]);
-    anchor = slowIdx + 1;
-
-    Print(array, begin, length);
-
-    if (anchor > 0)
+    int sortedIdx = -1;
+    int leftMost = begin;
+    int rightMost = end;
+    if (slowIdx < 0)
     {
-        // left
-        olh::Partition(array, anchor + 1, 0, anchor);
+        if (array[begin] <  array[anchor])
+        {
+            // The right most item is correct position
+            rightMost = end - 1;
+            sortedIdx = end;
+        }
+        else
+        {
+            // Swap the anchor with the first item greater than it
+            // Because the anchor is smallest item
+            std::swap(array[begin], array[anchor]);
+            leftMost = begin + 1;
+            sortedIdx = begin;
+        }
     }
-    
-    if (length - anchor - 1)
+    else
     {
-        // rigth
-        olh::Partition(array, length - anchor - 1, anchor + 1, length - 1);
+        std::swap(array[begin + slowIdx + 1], array[anchor]);
+        sortedIdx = begin + slowIdx + 1;
     }
+    // Debug Step Output
+    // Print(array, begin, length);
+
+    // Recursive Left Sub-Array
+    olh::Partition(array, leftMost, sortedIdx - 1);
+    // Recursive Right Sub-Array
+    olh::Partition(array, sortedIdx + 1, rightMost);
 }

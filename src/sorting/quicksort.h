@@ -12,6 +12,6 @@
 namespace olh
 {
     void QuickSort(int* const array, const int length);
-    void Partition(int* const array, const int length, int begin, int anchor);
+    void Partition(int* const array, const int begin, const int end);
 }
 #endif
