@@ -1,8 +1,8 @@
 #include <iostream>
-#include "sorting/BubbleSort.h"
 #include "utils/ArrayUtils.h"
 #include "utils/Random.h"
 #include "utils/SortingUtils.h"
+#include "sorting/SelectionSort.h"
 
 using namespace olh;
 int main(int argc, char* argv[])
@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     // int* arr = new int[length] { 3, 13, 11, 8, 2 };
     
     Print(arr, length);
-    olh::BubbleSort(arr, length);
+    olh::SelectionSort(arr, length);
     // Print(arr, length);
     std::cout << "Sorting result: " << Verify(arr, length) << std::endl;
 
